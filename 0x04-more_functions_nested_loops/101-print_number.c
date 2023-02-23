@@ -11,7 +11,7 @@ void print_number(int n)
 	// If number is smaller than 0, put a - sign
 	// and change number to positive
 	if (n < 0) {
-        	putchar('-');
+        	_putchar('-');
         	n = -n;
 	}
 
@@ -20,5 +20,5 @@ void print_number(int n)
 		print(n/10);
 
 	// Print the last digit
-	putchar(n%10 + '0');
+	_putchar(n%10 + '0');
 }
