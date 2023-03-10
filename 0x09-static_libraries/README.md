@@ -6,10 +6,6 @@ This repository contains more projects introducing the use, purpose of static li
 ```
 -Wall -pedantic -Werror -Wextra -c \*.c
 
-ar -rc libholberton.a \*.o
-
-ar -t libholberton.a
-
 0-isupper.o
 0-memset.o
 0-strcat.o
