@@ -1,45 +1,91 @@
-#include <stdio.h>
 #include "lists.h"
-#include <stdlib.h>
+
+size_t looped_listint_count(listint_t *head);
+size_t free_listint_safe(listint_t **h);
 
 /**
- * free_listint_safe - function that frees a list
- * @h: pointer listint_t structure
- * Return: Size of the list that was freed
+ * looped_listint_count - Counts number of unique nodes
+ * in a looped listint_t linked list.
+ * @head: pointer to the head of the listint_t to check.
+ * Return: 0 if list is looped, else number of unique list nodes.
  */
-size_t free_listint_safe(listint_t **h)
+size_t looped_listint_count(listint_t *head)
 {
-	size_t counter = 0;
-	listint_t *temp;
+	listint_t *placeholder, *place2;
+	size_t nodes = 1;
 
-	temp = *h;
-	while (temp)
+	if (head == NULL || head->next == NULL)
+		return (0);
+
+	placeholder = head->next;
+	place2 = (head->next)->next;
+
+	while (place2)
 	{
-		temp = *h;
-		temp = temp->next;
-		free_list(temp);
-		counter++;
-	}
-	*h = NULL;
+		if (placeholder == place2)
+		{
+			placeholder = head;
+			while (placeholder != place2)
+			{
+				nodes++;
+				placeholder = placeholder->next;
+				place2 = place2->next;
+			}
 
-	return (counter);
+			placeholder = placeholder->next;
+			while (placeholder != place2)
+			{
+				nodes++;
+				placeholder = placeholder->next;
+			}
+
+			return (nodes);
+		}
+
+		placeholder = placeholder->next;
+		place2 = (place2->next)->next;
+	}
+
+	return (0);
 }
 
 /**
- * free_list - function that frees a listint_t recursively
- * @head: pointer to the listint_t structure
- * Return: Nothing
+ * free_listint_safe - Frees listint_t list safely
+ * @h: pointer to the address of
+ * the head of the listint_t list.
+ * Return: TFreed list size.
+ * Description: function sets the head to NULL.
  */
-void free_list(listint_t *head)
+size_t free_listint_safe(listint_t **h)
 {
-	listint_t *temp;
+	listint_t *tmp;
+	size_t nodes, index;
 
-	if (head)
+	nodes = looped_listint_count(*h);
+
+	if (nodes == 0)
 	{
-		temp = head;
-		temp = temp->next;
-		free(temp);
-		free_list(temp);
+		for (; h != NULL && *h != NULL; nodes++)
+		{
+			tmp = (*h)->next;
+			free(*h);
+			*h = tmp;
+		}
 	}
-	free(head);
+
+	else
+	{
+		for (index = 0; index < nodes; index++)
+		{
+			tmp = (*h)->next;
+			free(*h);
+			*h = tmp;
+		}
+
+		*h = NULL;
+	}
+
+	h = NULL;
+
+	return (nodes);
 }
