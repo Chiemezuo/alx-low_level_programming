@@ -32,7 +32,7 @@ listint_t *find_listint_loop(listint_t *head)
 		}
 
 		placeholder = placeholder->next;
-		hare = (hare->next)->next;
+		place2 = (place2->next)->next;
 	}
 
 	return (NULL);
