@@ -1,17 +1,17 @@
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/uio.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/uio.h>
 
 int safe_close(int);
 /**
  * main - Main function to copy files
- * @argc: The number of passed arguments
- * @argv: The pointers to array arguments
- * Return: 1 on success, exits on failure
+ * @argc: num of args passed
+ * @argv: pointers to array args
+ * Return: 1 on success, else exit
  */
 int main(int argc, char *argv[])
 {
@@ -74,16 +74,16 @@ int main(int argc, char *argv[])
 }
 
 /**
- * safe_close - A function that closes a file and prints error when closed file
- * @description: Description error for closed file
- * Return: 1 on success, -1 on failure
+ * safe_close - Closes a file and prints error when closed file
+ * @descr: Description error for closed file
+ * Return: 1 on success, else -1
  */
-int safe_close(int description)
+int safe_close(int descr)
 {
-	int error;
+	int errorMessage;
 
-	error = close(description);
-	if (error < 0)
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", description);
-	return (error);
+	errorMessage = close(descr);
+	if (errorMessage < 0)
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", descr);
+	return (errorMessage);
 }
