@@ -1,17 +1,16 @@
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <sys/uio.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 /**
- * append_text_to_file - A function that appends text at the end to the  file
- * @filename: The filename to open and append in
- * @text_content: The NULL terminated string to add
- * Return: 1 on success, -1 if the file can not be created, nor written,
- * nor write fails.
+ * append_text_to_file - Appends text at the end to the  file
+ * @filename: Filename to open and append in
+ * @text: NULL terminated string to add
+ * Return: 1 if successful, else -1
  */
-int append_text_to_file(const char *filename, char *text_content)
+int append_text_to_file(const char *filename, char *text)
 {
 	int fdo, fdw, len = 0;
 
@@ -21,16 +20,16 @@ int append_text_to_file(const char *filename, char *text_content)
 	fdo = open(filename, O_RDWR | O_APPEND);
 	if (fdo < 0)
 		return (-1);
-	if (text_content == NULL)
+	if (text == NULL)
 	{
 		close(fdo);
 		return (1);
 	}
 
-	while (*(text_content + len))
+	while (*(text + len))
 		len++;
 
-	fdw = write(fdo, text_content, len);
+	fdw = write(fdo, text, len);
 	close(fdo);
 	if (fdw < 0)
 		return (-1);
