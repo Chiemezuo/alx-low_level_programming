@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * flip_bits - Gets number of bits needed to flip
  * @num: number of bit flips needed to equal num2 for num
